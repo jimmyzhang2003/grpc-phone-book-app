@@ -13,6 +13,8 @@
 		81BB69F52A49DE6400054DCF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BB69F42A49DE6400054DCF /* Preview Assets.xcassets */; };
 		81BB69F72A49DE6400054DCF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69F62A49DE6400054DCF /* Persistence.swift */; };
 		81BB69FA2A49DE6400054DCF /* PhoneBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69F82A49DE6400054DCF /* PhoneBook.xcdatamodeld */; };
+		81BB6A012A49E02800054DCF /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB6A002A49E02800054DCF /* ContactListView.swift */; };
+		81BB6A042A49E04600054DCF /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB6A032A49E04600054DCF /* AddContactView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		81BB69F42A49DE6400054DCF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		81BB69F62A49DE6400054DCF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		81BB69F92A49DE6400054DCF /* PhoneBook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhoneBook.xcdatamodel; sourceTree = "<group>"; };
+		81BB6A002A49E02800054DCF /* ContactListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListView.swift; sourceTree = "<group>"; };
+		81BB6A032A49E04600054DCF /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +59,8 @@
 		81BB69EC2A49DE6200054DCF /* PhoneBook */ = {
 			isa = PBXGroup;
 			children = (
+				81BB6A022A49E03100054DCF /* Views */,
 				81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */,
-				81BB69EF2A49DE6200054DCF /* ContentView.swift */,
 				81BB69F12A49DE6400054DCF /* Assets.xcassets */,
 				81BB69F62A49DE6400054DCF /* Persistence.swift */,
 				81BB69F82A49DE6400054DCF /* PhoneBook.xcdatamodeld */,
@@ -71,6 +75,16 @@
 				81BB69F42A49DE6400054DCF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		81BB6A022A49E03100054DCF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				81BB69EF2A49DE6200054DCF /* ContentView.swift */,
+				81BB6A002A49E02800054DCF /* ContactListView.swift */,
+				81BB6A032A49E04600054DCF /* AddContactView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,8 +157,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81BB6A012A49E02800054DCF /* ContactListView.swift in Sources */,
 				81BB69F72A49DE6400054DCF /* Persistence.swift in Sources */,
 				81BB69F02A49DE6200054DCF /* ContentView.swift in Sources */,
+				81BB6A042A49E04600054DCF /* AddContactView.swift in Sources */,
 				81BB69EE2A49DE6200054DCF /* PhoneBookApp.swift in Sources */,
 				81BB69FA2A49DE6400054DCF /* PhoneBook.xcdatamodeld in Sources */,
 			);

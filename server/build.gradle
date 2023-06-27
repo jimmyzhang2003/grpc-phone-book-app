@@ -1,0 +1,58 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.7.10"
+    id("com.google.protobuf") version "0.8.18"
+}
+
+version = "0.1"
+group = "com.example"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut.grpc:micronaut-grpc-runtime")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    testImplementation("io.micronaut:micronaut-http-client")
+
+}
+
+application {
+    mainClass.set("com.example.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs("build/generated/source/proto/main/grpc")
+            srcDirs("build/generated/source/proto/main/java")
+        }
+    }
+}
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:3.21.12" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:1.54.0" }
+    }
+    generateProtoTasks {
+        all()*.plugins { grpc {} }
+    }
+}
+micronaut {
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.example.*")
+    }
+}
+
+
+

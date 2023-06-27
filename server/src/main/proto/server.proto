@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.grpc";
+option java_outer_classname = "ContactServiceProto";
+
+package com.example.grpc;
+
+service ContactService {
+  rpc AddContact (ContactInfo) returns (ContactId);
+  rpc UpdateContact (ContactInfoWithId) returns (Empty);
+  rpc DeleteContact (ContactId) returns (Empty);
+  // rpc DeleteAllContacts (Empty) returns (Empty);
+  rpc GetContactsList (Empty) returns (ContactsList);
+}
+
+message Empty {}
+
+message ContactInfo {
+  string firstName = 1;
+  string lastName = 2;
+  string phoneNumber = 3;
+  string email = 4;
+}
+
+message ContactInfoWithId {
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string phoneNumber = 4;
+  string email = 5;
+}
+
+message ContactId {
+  string id = 1;
+}
+
+message ContactsList {
+  repeated ContactInfoWithId contacts = 1;
+}
