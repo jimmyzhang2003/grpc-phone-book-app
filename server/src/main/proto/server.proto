@@ -10,7 +10,8 @@ service ContactService {
   rpc AddContact (ContactInfo) returns (ContactId);
   rpc UpdateContact (ContactInfoWithId) returns (Empty);
   rpc DeleteContact (ContactId) returns (Empty);
-  // rpc DeleteAllContacts (Empty) returns (Empty);
+  rpc ClearContacts (Empty) returns (Empty);
+  rpc GetContact (ContactId) returns (ContactInfo);
   rpc GetContactsList (Empty) returns (ContactsList);
 }
 

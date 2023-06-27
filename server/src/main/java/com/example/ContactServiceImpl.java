@@ -7,6 +7,7 @@ import com.example.grpc.ContactInfoWithId;
 import com.example.grpc.ContactId;
 import com.example.grpc.ContactsList;
 import io.grpc.stub.StreamObserver;
+import io.grpc.Status;
 import jakarta.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,26 +42,102 @@ public class ContactServiceImpl extends ContactServiceGrpc.ContactServiceImplBas
 
     @Override
     public void updateContact(ContactInfoWithId request, StreamObserver<Empty> responseObserver) {
-        String id = request.getId();
+        try {
+            String id = request.getId();
+            ContactInfo contact = database.get(id);
 
-        ContactInfo contact = database.get(id);
+            if (id == "") {
+                throw new MissingIdException("No ID provided");
+            }
 
-        // CHECK TO MAKE SURE WHETHER THESE FIELDS ARE ACTUALLY PROVIDED
+            if (contact == null) {
+                throw new InvalidIdException("ID not found");
+            }
 
-        // update the specified fields
-        ContactInfo modifiedContact = contact.toBuilder()
-            .setFirstName(request.getFirstName())
-            .setLastName(request.getLastName())
-            .setPhoneNumber(request.getPhoneNumber())
-            .setEmail(request.getEmail())
-            .build();
+            // update the specified fields
+            ContactInfo modifiedContact = contact.toBuilder()
+                .setFirstName(request.getFirstName())
+                .setLastName(request.getLastName())
+                .setPhoneNumber(request.getPhoneNumber())
+                .setEmail(request.getEmail())
+                .build();
 
-        database.put(id, modifiedContact);
-        
+            database.put(id, modifiedContact);
+            
+            Empty response = Empty.newBuilder().build();
+            
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } catch (MissingIdException ex) {
+            Status status = Status.FAILED_PRECONDITION.withDescription("ID must be provided to update contact information");
+            responseObserver.onError(status.asRuntimeException());
+        } catch (InvalidIdException ex) {
+            Status status = Status.INVALID_ARGUMENT.withDescription("ID not found");
+            responseObserver.onError(status.asRuntimeException());
+        }
+    }
+
+    @Override
+    public void deleteContact(ContactId request, StreamObserver<Empty> responseObserver) {
+        try {
+            String id = request.getId();
+
+            if (id == "") {
+                throw new MissingIdException("No ID provided");
+            }
+
+            if (database.remove(id) == null) {
+                throw new InvalidIdException("ID not found");
+            }
+
+            Empty response = Empty.newBuilder().build();
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } catch (MissingIdException ex) {
+            Status status = Status.FAILED_PRECONDITION.withDescription("ID must be provided to delete contact");
+            responseObserver.onError(status.asRuntimeException());
+        } catch (InvalidIdException ex) {
+            Status status = Status.INVALID_ARGUMENT.withDescription("ID not found");
+            responseObserver.onError(status.asRuntimeException());
+        }
+    }
+
+    @Override
+    public void clearContacts(Empty request, StreamObserver<Empty> responseObserver) {
+        database.clear();
+
         Empty response = Empty.newBuilder().build();
-        
+
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getContact(ContactId request, StreamObserver<ContactInfo> responseObserver) {
+        try {
+            String id = request.getId();
+            ContactInfo contact = database.get(id);
+
+            if (id == "") {
+                throw new MissingIdException("No ID provided");
+            }
+
+            if (contact == null) {
+                throw new InvalidIdException("ID not found");
+            }
+
+            ContactInfo response = contact;
+            
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } catch (MissingIdException ex) {
+            Status status = Status.FAILED_PRECONDITION.withDescription("ID must be provided to delete contact");
+            responseObserver.onError(status.asRuntimeException());
+        } catch (InvalidIdException ex) {
+            Status status = Status.INVALID_ARGUMENT.withDescription("ID not found");
+            responseObserver.onError(status.asRuntimeException());
+        }
     }
 
     @Override
