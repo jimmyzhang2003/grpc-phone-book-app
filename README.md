@@ -15,4 +15,4 @@ cd server
 ```
 
 ## Start the Client
-To start the client, simply build the PhoneBook application in XCode and run on an iPhone simulator.
+To start the client, simply build the PhoneBook application in Xcode and run on an iPhone simulator.

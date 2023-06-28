@@ -94,8 +94,8 @@ struct EditContactView: View {
                         .frame(height: 50)
                     }
                 )
-                .disabled(firstName == "" || lastName == "" || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail)
-                .opacity(firstName == "" || lastName == "" || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail ? 0.5 : 1.0)
+                .disabled(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail)
+                .opacity(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail ? 0.5 : 1.0)
             }
             .padding()
         }
@@ -107,6 +107,7 @@ struct EditContactView: View {
                 .fontWeight(.bold)
             TextField(detail.wrappedValue, text: detail)
                 .disabled(!isEditing)
+                .autocorrectionDisabled()
                 .border(isEditing ? getBorderColor(field, content: detail.wrappedValue) : .clear)
                 .animation(.default, value: isEditing)
         }

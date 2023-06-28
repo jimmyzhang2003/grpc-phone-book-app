@@ -21,9 +21,9 @@ struct AddContactView: View {
     var body: some View {
         VStack {
             TextField("First name (e.g., Jimmy)", text: self.$firstName)
-                .border(self.firstName == "" ? .red : .green)
+                .border(self.firstName.isEmpty ? .red : .green)
             TextField("Last name (e.g., Zhang)", text: self.$lastName)
-                .border(self.lastName == "" ? .red : .green)
+                .border(self.lastName.isEmpty ? .red : .green)
             TextField("Phone number (e.g., 8888888888)", text: self.$phoneNumber)
                 .border(!self.phoneNumber.isValidPhoneNumber ? .red : .green)
             TextField("Email (e.g., jimmy.zhang@nuance.com)", text: self.$email)
@@ -52,11 +52,12 @@ struct AddContactView: View {
                 .frame(height: 50)
                 .padding(.top)
             })
-            .disabled(firstName == "" || lastName == "" || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail)
-            .opacity(firstName == "" || lastName == "" || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail ? 0.5 : 1.0)
+            .disabled(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail)
+            .opacity(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail ? 0.5 : 1.0)
         }
         .padding(.horizontal)
         .textFieldStyle(RoundedBorderTextFieldStyle())
+        .autocorrectionDisabled()
     }
 }
 

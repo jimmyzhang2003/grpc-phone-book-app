@@ -80,7 +80,7 @@ class GRPCManager: ObservableObject {
         
         client.updateContact(contactInfo).response.whenComplete { result in
             switch result {
-            case .success(let response):
+            case .success:
                 print("Updated contact with id \(contact.id)")
             case .failure(let error):
                 print("addContact failed with error: \(error)")
