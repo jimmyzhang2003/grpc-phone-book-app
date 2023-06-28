@@ -28,17 +28,17 @@ struct ContactListView: View {
                             .font(.headline)
                             .fontWeight(.bold)
                     }
-//                    .swipeActions {
-//                        Button(
-//                            role: .destructive,
-//                            action: {
-//                                
-//                            },
-//                            label: {
-//                                Image(systemName: "trash")
-//                            }
-//                        )
-//                    }
+                    .swipeActions {
+                        Button(
+                            role: .destructive,
+                            action: {
+                                grpcManager.deleteContact(with: contact.id)
+                            },
+                            label: {
+                                Image(systemName: "trash")
+                            }
+                        )
+                    }
                 }
             }
             .animation(.default, value: viewModel.contactsList)

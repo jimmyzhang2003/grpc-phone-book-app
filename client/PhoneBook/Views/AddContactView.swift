@@ -38,7 +38,7 @@ struct AddContactView: View {
                     email: self.email
                 )
                 
-                grpcManager.addContact(newContact)
+                _ = grpcManager.addContact(newContact)
                 
                 print("New contact created")
                 

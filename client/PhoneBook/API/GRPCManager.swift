@@ -13,6 +13,7 @@ import NIOSSL
 
 class GRPCManager: ObservableObject {
     var connection: ClientConnection?
+    let client: Com_Example_Grpc_ContactServiceNIOClient?
     
     init() {
         let conf = ClientConnection.Configuration.default(
@@ -20,11 +21,19 @@ class GRPCManager: ObservableObject {
             eventLoopGroup: MultiThreadedEventLoopGroup(numberOfThreads: 1)
         )
         
-        connection = ClientConnection.init(configuration: conf)
+        self.connection = ClientConnection.init(configuration: conf)
+        
+        guard let connection = connection else {
+            self.client = nil
+            return
+        }
+        
+        self.client = Com_Example_Grpc_ContactServiceNIOClient(channel: connection)
     }
     
     deinit {
         guard let connection = connection else { return }
+        
         do {
             try connection.close().wait()
         } catch {
@@ -33,7 +42,7 @@ class GRPCManager: ObservableObject {
     }
     
     func addContact(_ contact: Contact) -> String {
-        guard let connection = connection else { return "" }
+        guard let client = client else { return "" }
         
         let contactInfo = Com_Example_Grpc_ContactInfo.with {
             $0.firstName = contact.firstName
@@ -41,14 +50,14 @@ class GRPCManager: ObservableObject {
             $0.phoneNumber = contact.phoneNumber
             $0.email = contact.email
         }
-        
-        let client = Com_Example_Grpc_ContactServiceNIOClient(channel: connection)
+
         var contactId: String = ""
         
         client.addContact(contactInfo).response.whenComplete { result in
             switch result {
             case .success(let response):
                 contactId = response.id
+                print("Created contact with id \(contactId)")
             case .failure(let error):
                 print("addContact failed with error: \(error)")
                 return
@@ -58,10 +67,25 @@ class GRPCManager: ObservableObject {
         return contactId
     }
     
-    func clearContacts() {
-        guard let connection = connection else { return }
+    func deleteContact(with id: String) {
+        guard let client = client else { return }
         
-        let client = Com_Example_Grpc_ContactServiceNIOClient(channel: connection)
+        let contactId = Com_Example_Grpc_ContactId.with {
+            $0.id = id
+        }
+        
+        client.deleteContact(contactId).response.whenComplete { result in
+            switch result {
+            case .success:
+                print("Deleted contact with id \(id)")
+            case .failure(let error):
+                print("deleteContact failed with error: \(error)")
+            }
+        }
+    }
+    
+    func clearContacts() {
+        guard let client = client else { return }
         
         client.clearContacts(Com_Example_Grpc_Empty()).response.whenComplete { result in
             switch result {
@@ -69,15 +93,13 @@ class GRPCManager: ObservableObject {
                 print("Cleared all contacts")
             case .failure(let error):
                 print("clearContacts failed with error: \(error)")
-                return
             }
         }
     }
     
     func getContactsList(completion: @escaping([Contact]) -> Void) {
-        guard let connection = connection else { return }
-        
-        let client = Com_Example_Grpc_ContactServiceNIOClient(channel: connection)
+        guard let client = client else { return }
+
         var contactsList: [Contact] = []
         
         client.getContactsList(Com_Example_Grpc_Empty()).response.whenComplete { result in

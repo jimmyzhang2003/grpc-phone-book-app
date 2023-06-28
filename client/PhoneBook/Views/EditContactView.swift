@@ -12,7 +12,6 @@ struct EditContactView: View {
     
     var body: some View {
         VStack {
-            Text(contact.id)
             Text(contact.firstName)
             Text(contact.lastName)
             Text(contact.phoneNumber)
