@@ -7,23 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		816477512A4B37E2007F3974 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477502A4B37E2007F3974 /* Contact.swift */; };
+		816477562A4B4092007F3974 /* server.proto in Sources */ = {isa = PBXBuildFile; fileRef = 816477552A4B4092007F3974 /* server.proto */; };
+		816477592A4B4154007F3974 /* server.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477572A4B4154007F3974 /* server.pb.swift */; };
+		8164775A2A4B4154007F3974 /* server.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477582A4B4154007F3974 /* server.grpc.swift */; };
+		816477602A4B4634007F3974 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 8164775F2A4B4634007F3974 /* SwiftProtobuf */; };
+		816477622A4B4634007F3974 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 816477612A4B4634007F3974 /* SwiftProtobufPluginLibrary */; };
+		816477642A4B4634007F3974 /* protoc-gen-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 816477632A4B4634007F3974 /* protoc-gen-swift */; };
+		816477672A4B4704007F3974 /* CGRPCZlib in Frameworks */ = {isa = PBXBuildFile; productRef = 816477662A4B4704007F3974 /* CGRPCZlib */; };
+		816477692A4B4704007F3974 /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = 816477682A4B4704007F3974 /* GRPC */; };
+		8164776B2A4B4704007F3974 /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 8164776A2A4B4704007F3974 /* protoc-gen-grpc-swift */; };
+		8164776D2A4B4FA7007F3974 /* GRPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164776C2A4B4FA7007F3974 /* GRPCManager.swift */; };
+		8164776F2A4B56E2007F3974 /* EditContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164776E2A4B56E2007F3974 /* EditContactView.swift */; };
+		816477712A4B73F9007F3974 /* ContactListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477702A4B73F9007F3974 /* ContactListViewModel.swift */; };
+		816477752A4C786D007F3974 /* String+IsValidPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477742A4C786D007F3974 /* String+IsValidPhoneNumber.swift */; };
+		816477772A4C7877007F3974 /* String+IsValidEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477762A4C7877007F3974 /* String+IsValidEmail.swift */; };
 		81BB69EE2A49DE6200054DCF /* PhoneBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */; };
-		81BB69F02A49DE6200054DCF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69EF2A49DE6200054DCF /* ContentView.swift */; };
 		81BB69F22A49DE6400054DCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BB69F12A49DE6400054DCF /* Assets.xcassets */; };
 		81BB69F52A49DE6400054DCF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BB69F42A49DE6400054DCF /* Preview Assets.xcassets */; };
-		81BB69F72A49DE6400054DCF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69F62A49DE6400054DCF /* Persistence.swift */; };
 		81BB69FA2A49DE6400054DCF /* PhoneBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69F82A49DE6400054DCF /* PhoneBook.xcdatamodeld */; };
 		81BB6A012A49E02800054DCF /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB6A002A49E02800054DCF /* ContactListView.swift */; };
 		81BB6A042A49E04600054DCF /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB6A032A49E04600054DCF /* AddContactView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		816477502A4B37E2007F3974 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		816477552A4B4092007F3974 /* server.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = server.proto; sourceTree = "<group>"; };
+		816477572A4B4154007F3974 /* server.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = server.pb.swift; sourceTree = "<group>"; };
+		816477582A4B4154007F3974 /* server.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = server.grpc.swift; sourceTree = "<group>"; };
+		8164776C2A4B4FA7007F3974 /* GRPCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRPCManager.swift; sourceTree = "<group>"; };
+		8164776E2A4B56E2007F3974 /* EditContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactView.swift; sourceTree = "<group>"; };
+		816477702A4B73F9007F3974 /* ContactListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModel.swift; sourceTree = "<group>"; };
+		816477742A4C786D007F3974 /* String+IsValidPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+IsValidPhoneNumber.swift"; sourceTree = "<group>"; };
+		816477762A4C7877007F3974 /* String+IsValidEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+IsValidEmail.swift"; sourceTree = "<group>"; };
 		81BB69EA2A49DE6200054DCF /* PhoneBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneBookApp.swift; sourceTree = "<group>"; };
-		81BB69EF2A49DE6200054DCF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		81BB69F12A49DE6400054DCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81BB69F42A49DE6400054DCF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		81BB69F62A49DE6400054DCF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		81BB69F92A49DE6400054DCF /* PhoneBook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhoneBook.xcdatamodel; sourceTree = "<group>"; };
 		81BB6A002A49E02800054DCF /* ContactListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListView.swift; sourceTree = "<group>"; };
 		81BB6A032A49E04600054DCF /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
@@ -34,12 +54,61 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				816477622A4B4634007F3974 /* SwiftProtobufPluginLibrary in Frameworks */,
+				816477692A4B4704007F3974 /* GRPC in Frameworks */,
+				8164776B2A4B4704007F3974 /* protoc-gen-grpc-swift in Frameworks */,
+				816477672A4B4704007F3974 /* CGRPCZlib in Frameworks */,
+				816477602A4B4634007F3974 /* SwiftProtobuf in Frameworks */,
+				816477642A4B4634007F3974 /* protoc-gen-swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8164774F2A4B37D8007F3974 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				816477502A4B37E2007F3974 /* Contact.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		816477542A4B4069007F3974 /* ProtocolBuffers */ = {
+			isa = PBXGroup;
+			children = (
+				816477552A4B4092007F3974 /* server.proto */,
+				816477582A4B4154007F3974 /* server.grpc.swift */,
+				816477572A4B4154007F3974 /* server.pb.swift */,
+			);
+			path = ProtocolBuffers;
+			sourceTree = "<group>";
+		};
+		8164775B2A4B444A007F3974 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				8164776C2A4B4FA7007F3974 /* GRPCManager.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		816477722A4B7415007F3974 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				816477702A4B73F9007F3974 /* ContactListViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		816477732A4C7849007F3974 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				816477742A4C786D007F3974 /* String+IsValidPhoneNumber.swift */,
+				816477762A4C7877007F3974 /* String+IsValidEmail.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		81BB69E12A49DE6200054DCF = {
 			isa = PBXGroup;
 			children = (
@@ -59,10 +128,13 @@
 		81BB69EC2A49DE6200054DCF /* PhoneBook */ = {
 			isa = PBXGroup;
 			children = (
+				816477732A4C7849007F3974 /* Utilities */,
+				8164775B2A4B444A007F3974 /* API */,
+				816477542A4B4069007F3974 /* ProtocolBuffers */,
+				8164774F2A4B37D8007F3974 /* Models */,
 				81BB6A022A49E03100054DCF /* Views */,
 				81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */,
 				81BB69F12A49DE6400054DCF /* Assets.xcassets */,
-				81BB69F62A49DE6400054DCF /* Persistence.swift */,
 				81BB69F82A49DE6400054DCF /* PhoneBook.xcdatamodeld */,
 				81BB69F32A49DE6400054DCF /* Preview Content */,
 			);
@@ -80,9 +152,10 @@
 		81BB6A022A49E03100054DCF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				81BB69EF2A49DE6200054DCF /* ContentView.swift */,
+				816477722A4B7415007F3974 /* ViewModels */,
 				81BB6A002A49E02800054DCF /* ContactListView.swift */,
 				81BB6A032A49E04600054DCF /* AddContactView.swift */,
+				8164776E2A4B56E2007F3974 /* EditContactView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -103,6 +176,14 @@
 			dependencies = (
 			);
 			name = PhoneBook;
+			packageProductDependencies = (
+				8164775F2A4B4634007F3974 /* SwiftProtobuf */,
+				816477612A4B4634007F3974 /* SwiftProtobufPluginLibrary */,
+				816477632A4B4634007F3974 /* protoc-gen-swift */,
+				816477662A4B4704007F3974 /* CGRPCZlib */,
+				816477682A4B4704007F3974 /* GRPC */,
+				8164776A2A4B4704007F3974 /* protoc-gen-grpc-swift */,
+			);
 			productName = PhoneBook;
 			productReference = 81BB69EA2A49DE6200054DCF /* PhoneBook.app */;
 			productType = "com.apple.product-type.application";
@@ -131,6 +212,10 @@
 				Base,
 			);
 			mainGroup = 81BB69E12A49DE6200054DCF;
+			packageReferences = (
+				8164775E2A4B4634007F3974 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+				816477652A4B4704007F3974 /* XCRemoteSwiftPackageReference "grpc-swift" */,
+			);
 			productRefGroup = 81BB69EB2A49DE6200054DCF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -158,11 +243,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				81BB6A012A49E02800054DCF /* ContactListView.swift in Sources */,
-				81BB69F72A49DE6400054DCF /* Persistence.swift in Sources */,
-				81BB69F02A49DE6200054DCF /* ContentView.swift in Sources */,
+				8164775A2A4B4154007F3974 /* server.grpc.swift in Sources */,
 				81BB6A042A49E04600054DCF /* AddContactView.swift in Sources */,
 				81BB69EE2A49DE6200054DCF /* PhoneBookApp.swift in Sources */,
+				816477562A4B4092007F3974 /* server.proto in Sources */,
+				8164776D2A4B4FA7007F3974 /* GRPCManager.swift in Sources */,
+				816477712A4B73F9007F3974 /* ContactListViewModel.swift in Sources */,
+				816477752A4C786D007F3974 /* String+IsValidPhoneNumber.swift in Sources */,
 				81BB69FA2A49DE6400054DCF /* PhoneBook.xcdatamodeld in Sources */,
+				816477772A4C7877007F3974 /* String+IsValidEmail.swift in Sources */,
+				8164776F2A4B56E2007F3974 /* EditContactView.swift in Sources */,
+				816477592A4B4154007F3974 /* server.pb.swift in Sources */,
+				816477512A4B37E2007F3974 /* Contact.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +455,58 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8164775E2A4B4634007F3974 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		816477652A4B4704007F3974 /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/grpc/grpc-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8164775F2A4B4634007F3974 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8164775E2A4B4634007F3974 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+		816477612A4B4634007F3974 /* SwiftProtobufPluginLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8164775E2A4B4634007F3974 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobufPluginLibrary;
+		};
+		816477632A4B4634007F3974 /* protoc-gen-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8164775E2A4B4634007F3974 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = "protoc-gen-swift";
+		};
+		816477662A4B4704007F3974 /* CGRPCZlib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 816477652A4B4704007F3974 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = CGRPCZlib;
+		};
+		816477682A4B4704007F3974 /* GRPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 816477652A4B4704007F3974 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = GRPC;
+		};
+		8164776A2A4B4704007F3974 /* protoc-gen-grpc-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 816477652A4B4704007F3974 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = "protoc-gen-grpc-swift";
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		81BB69F82A49DE6400054DCF /* PhoneBook.xcdatamodeld */ = {

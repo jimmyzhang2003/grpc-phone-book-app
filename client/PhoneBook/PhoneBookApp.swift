@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct PhoneBookApp: App {
-    let persistenceController = PersistenceController.shared
+    @StateObject private var grpcManager = GRPCManager()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            ContactListView()
+                .environmentObject(grpcManager)
         }
     }
 }
