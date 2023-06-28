@@ -40,8 +40,6 @@ struct AddContactView: View {
                 
                 _ = grpcManager.addContact(newContact)
                 
-                print("New contact created")
-                
                 self.presentationMode.wrappedValue.dismiss()
             }, label: {
                 ZStack {

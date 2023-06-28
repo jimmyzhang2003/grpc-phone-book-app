@@ -25,7 +25,6 @@
 		81BB69EE2A49DE6200054DCF /* PhoneBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */; };
 		81BB69F22A49DE6400054DCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BB69F12A49DE6400054DCF /* Assets.xcassets */; };
 		81BB69F52A49DE6400054DCF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BB69F42A49DE6400054DCF /* Preview Assets.xcassets */; };
-		81BB69FA2A49DE6400054DCF /* PhoneBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69F82A49DE6400054DCF /* PhoneBook.xcdatamodeld */; };
 		81BB6A012A49E02800054DCF /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB6A002A49E02800054DCF /* ContactListView.swift */; };
 		81BB6A042A49E04600054DCF /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB6A032A49E04600054DCF /* AddContactView.swift */; };
 /* End PBXBuildFile section */
@@ -44,7 +43,6 @@
 		81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneBookApp.swift; sourceTree = "<group>"; };
 		81BB69F12A49DE6400054DCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81BB69F42A49DE6400054DCF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		81BB69F92A49DE6400054DCF /* PhoneBook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhoneBook.xcdatamodel; sourceTree = "<group>"; };
 		81BB6A002A49E02800054DCF /* ContactListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListView.swift; sourceTree = "<group>"; };
 		81BB6A032A49E04600054DCF /* AddContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,14 +126,13 @@
 		81BB69EC2A49DE6200054DCF /* PhoneBook */ = {
 			isa = PBXGroup;
 			children = (
-				816477732A4C7849007F3974 /* Utilities */,
 				8164775B2A4B444A007F3974 /* API */,
+				816477732A4C7849007F3974 /* Utilities */,
 				816477542A4B4069007F3974 /* ProtocolBuffers */,
 				8164774F2A4B37D8007F3974 /* Models */,
 				81BB6A022A49E03100054DCF /* Views */,
 				81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */,
 				81BB69F12A49DE6400054DCF /* Assets.xcassets */,
-				81BB69F82A49DE6400054DCF /* PhoneBook.xcdatamodeld */,
 				81BB69F32A49DE6400054DCF /* Preview Content */,
 			);
 			path = PhoneBook;
@@ -250,7 +247,6 @@
 				8164776D2A4B4FA7007F3974 /* GRPCManager.swift in Sources */,
 				816477712A4B73F9007F3974 /* ContactListViewModel.swift in Sources */,
 				816477752A4C786D007F3974 /* String+IsValidPhoneNumber.swift in Sources */,
-				81BB69FA2A49DE6400054DCF /* PhoneBook.xcdatamodeld in Sources */,
 				816477772A4C7877007F3974 /* String+IsValidEmail.swift in Sources */,
 				8164776F2A4B56E2007F3974 /* EditContactView.swift in Sources */,
 				816477592A4B4154007F3974 /* server.pb.swift in Sources */,
@@ -507,19 +503,6 @@
 			productName = "protoc-gen-grpc-swift";
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		81BB69F82A49DE6400054DCF /* PhoneBook.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				81BB69F92A49DE6400054DCF /* PhoneBook.xcdatamodel */,
-			);
-			currentVersion = 81BB69F92A49DE6400054DCF /* PhoneBook.xcdatamodel */;
-			path = PhoneBook.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 81BB69E22A49DE6200054DCF /* Project object */;
 }

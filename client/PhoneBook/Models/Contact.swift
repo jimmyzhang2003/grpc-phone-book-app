@@ -23,6 +23,6 @@ public class Contact: Identifiable, Equatable {
     }
     
     public static func == (lhs: Contact, rhs: Contact) -> Bool {
-        return lhs.id == rhs.id && lhs.firstName == rhs.firstName && lhs.phoneNumber == rhs.phoneNumber && lhs.email == rhs.email
+        return lhs.id == rhs.id
     }
 }

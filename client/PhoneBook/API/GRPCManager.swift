@@ -67,6 +67,28 @@ class GRPCManager: ObservableObject {
         return contactId
     }
     
+    func updateContact(_ contact: Contact) {
+        guard let client = client else { return }
+        
+        let contactInfo = Com_Example_Grpc_ContactInfoWithId.with {
+            $0.id = contact.id
+            $0.firstName = contact.firstName
+            $0.lastName = contact.lastName
+            $0.phoneNumber = contact.phoneNumber
+            $0.email = contact.email
+        }
+        
+        client.updateContact(contactInfo).response.whenComplete { result in
+            switch result {
+            case .success(let response):
+                print("Updated contact with id \(contact.id)")
+            case .failure(let error):
+                print("addContact failed with error: \(error)")
+                return
+            }
+        }
+    }
+    
     func deleteContact(with id: String) {
         guard let client = client else { return }
         

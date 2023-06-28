@@ -16,12 +16,12 @@ struct ContactListView: View {
             List {
                 ForEach(viewModel.contactsList) { contact in
                     NavigationLink {
-                        EditContactView(contact: Contact(
+                        EditContactView(
                             id: contact.id,
                             firstName: contact.firstName,
                             lastName: contact.lastName,
                             phoneNumber: contact.phoneNumber,
-                            email: contact.email)
+                            email: contact.email
                         )
                     } label: {
                         Text("\(contact.firstName) \(contact.lastName)")
@@ -32,7 +32,12 @@ struct ContactListView: View {
                         Button(
                             role: .destructive,
                             action: {
-                                grpcManager.deleteContact(with: contact.id)
+                                grpcManager.deleteContact(with: contact.id) 
+                                grpcManager.getContactsList { contacts in
+                                    DispatchQueue.main.async {
+                                        viewModel.updateContactsList(contacts)
+                                    }
+                                }
                             },
                             label: {
                                 Image(systemName: "trash")
