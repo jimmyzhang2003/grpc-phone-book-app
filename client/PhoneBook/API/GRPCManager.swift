@@ -13,9 +13,10 @@ import NIOSSL
 
 class GRPCManager: ObservableObject {
     var connection: ClientConnection?
-    let client: Com_Example_Grpc_ContactServiceNIOClient?
+    private var client: Com_Example_Grpc_ContactServiceAsyncClient?
+    static let shared: GRPCManager = GRPCManager() // singleton
     
-    init() {
+    private init() {
         let conf = ClientConnection.Configuration.default(
             target: .hostAndPort("localhost", 50051),
             eventLoopGroup: MultiThreadedEventLoopGroup(numberOfThreads: 1)
@@ -28,7 +29,7 @@ class GRPCManager: ObservableObject {
             return
         }
         
-        self.client = Com_Example_Grpc_ContactServiceNIOClient(channel: connection)
+        self.client = Com_Example_Grpc_ContactServiceAsyncClient(channel: connection)
     }
     
     deinit {
@@ -41,8 +42,8 @@ class GRPCManager: ObservableObject {
         }
     }
     
-    func addContact(_ contact: Contact) -> String {
-        guard let client = client else { return "" }
+    func addContact(_ contact: Contact) -> Task<String, Never> {
+        guard let client = client else { return Task { "" } }
         
         let contactInfo = Com_Example_Grpc_ContactInfo.with {
             $0.firstName = contact.firstName
@@ -50,21 +51,17 @@ class GRPCManager: ObservableObject {
             $0.phoneNumber = contact.phoneNumber
             $0.email = contact.email
         }
-
-        var contactId: String = ""
         
-        client.addContact(contactInfo).response.whenComplete { result in
-            switch result {
-            case .success(let response):
-                contactId = response.id
-                print("Created contact with id \(contactId)")
-            case .failure(let error):
+        return Task {
+            do {
+                let response = try await client.addContact(contactInfo)
+                print("Created contact with id \(response.id)")
+                return response.id
+            } catch {
                 print("addContact failed with error: \(error)")
-                return
+                return ""
             }
         }
-        
-        return contactId
     }
     
     func updateContact(_ contact: Contact) {
@@ -78,13 +75,12 @@ class GRPCManager: ObservableObject {
             $0.email = contact.email
         }
         
-        client.updateContact(contactInfo).response.whenComplete { result in
-            switch result {
-            case .success:
+        Task {
+            do {
+                _ = try await client.updateContact(contactInfo)
                 print("Updated contact with id \(contact.id)")
-            case .failure(let error):
+            } catch {
                 print("addContact failed with error: \(error)")
-                return
             }
         }
     }
@@ -96,11 +92,11 @@ class GRPCManager: ObservableObject {
             $0.id = id
         }
         
-        client.deleteContact(contactId).response.whenComplete { result in
-            switch result {
-            case .success:
+        Task {
+            do {
+                _ = try await client.deleteContact(contactId)
                 print("Deleted contact with id \(id)")
-            case .failure(let error):
+            } catch {
                 print("deleteContact failed with error: \(error)")
             }
         }
@@ -109,11 +105,11 @@ class GRPCManager: ObservableObject {
     func clearContacts() {
         guard let client = client else { return }
         
-        client.clearContacts(Com_Example_Grpc_Empty()).response.whenComplete { result in
-            switch result {
-            case .success:
+        Task {
+            do {
+                _ = try await client.clearContacts(Com_Example_Grpc_Empty())
                 print("Cleared all contacts")
-            case .failure(let error):
+            } catch {
                 print("clearContacts failed with error: \(error)")
             }
         }
@@ -121,18 +117,32 @@ class GRPCManager: ObservableObject {
     
     func getContactsList(completion: @escaping([Contact]) -> Void) {
         guard let client = client else { return }
-
-        var contactsList: [Contact] = []
         
-        client.getContactsList(Com_Example_Grpc_Empty()).response.whenComplete { result in
-            switch result {
-            case .success(let response):
-                contactsList = response.contacts.map { Contact(id: $0.id, firstName: $0.firstName, lastName: $0.lastName, phoneNumber: $0.phoneNumber, email: $0.email) }
+        Task {
+            do {
+                let response = try await client.getContactsList(Com_Example_Grpc_Empty())
+                let contactsList = response.contacts.map { Contact(id: $0.id, firstName: $0.firstName, lastName: $0.lastName, phoneNumber: $0.phoneNumber, email: $0.email) }
                 completion(contactsList)
-            case .failure(let error):
+            } catch {
                 print("getContactsList failed with error: \(error)")
-                completion(contactsList)
             }
         }
     }
+    
+//    func getGroceryListForContact(with id: String) {
+//        guard let client = client else { return }
+//
+//        let contactId = Com_Example_Grpc_ContactId.with {
+//            $0.id = id
+//        }
+//
+//        let asyncClient = Com_Example_Grpc_ContactServiceAsyncClient(channel: connection!)
+//
+//        asyncClient.getGroceryListForContact(<#T##request: Com_Example_Grpc_ContactId##Com_Example_Grpc_ContactId#>)
+//
+//
+//        client.getGroceryListForContact(contactId) { response in
+//            response.
+//        }
+//    }
 }

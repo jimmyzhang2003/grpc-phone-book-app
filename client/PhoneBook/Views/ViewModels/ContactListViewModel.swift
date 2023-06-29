@@ -10,7 +10,6 @@ import Foundation
 extension ContactListView {
     @MainActor class ContactListViewModel: ObservableObject {
         @Published var contactsList: [Contact] = []
-        @Published var ids: [String] = []
         
         func updateContactsList(_ newContactsList: [Contact]) {
             self.contactsList = newContactsList

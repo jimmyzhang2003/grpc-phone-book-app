@@ -61,6 +61,12 @@ internal protocol Com_Example_Grpc_ContactServiceClientProtocol: GRPCClient {
     _ request: Com_Example_Grpc_Empty,
     callOptions: CallOptions?
   ) -> UnaryCall<Com_Example_Grpc_Empty, Com_Example_Grpc_ContactsList>
+
+  func getGroceryListForContact(
+    _ request: Com_Example_Grpc_ContactId,
+    callOptions: CallOptions?,
+    handler: @escaping (Com_Example_Grpc_GroceryItem) -> Void
+  ) -> ServerStreamingCall<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>
 }
 
 extension Com_Example_Grpc_ContactServiceClientProtocol {
@@ -175,6 +181,27 @@ extension Com_Example_Grpc_ContactServiceClientProtocol {
       interceptors: self.interceptors?.makeGetContactsListInterceptors() ?? []
     )
   }
+
+  /// Server streaming call to GetGroceryListForContact
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to GetGroceryListForContact.
+  ///   - callOptions: Call options.
+  ///   - handler: A closure called when each response is received from the server.
+  /// - Returns: A `ServerStreamingCall` with futures for the metadata and status.
+  internal func getGroceryListForContact(
+    _ request: Com_Example_Grpc_ContactId,
+    callOptions: CallOptions? = nil,
+    handler: @escaping (Com_Example_Grpc_GroceryItem) -> Void
+  ) -> ServerStreamingCall<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem> {
+    return self.makeServerStreamingCall(
+      path: Com_Example_Grpc_ContactServiceClientMetadata.Methods.getGroceryListForContact.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetGroceryListForContactInterceptors() ?? [],
+      handler: handler
+    )
+  }
 }
 
 @available(*, deprecated)
@@ -268,6 +295,11 @@ internal protocol Com_Example_Grpc_ContactServiceAsyncClientProtocol: GRPCClient
     _ request: Com_Example_Grpc_Empty,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Com_Example_Grpc_Empty, Com_Example_Grpc_ContactsList>
+
+  func makeGetGroceryListForContactCall(
+    _ request: Com_Example_Grpc_ContactId,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncServerStreamingCall<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -351,6 +383,18 @@ extension Com_Example_Grpc_ContactServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeGetContactsListInterceptors() ?? []
     )
   }
+
+  internal func makeGetGroceryListForContactCall(
+    _ request: Com_Example_Grpc_ContactId,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncServerStreamingCall<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem> {
+    return self.makeAsyncServerStreamingCall(
+      path: Com_Example_Grpc_ContactServiceClientMetadata.Methods.getGroceryListForContact.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetGroceryListForContactInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -426,6 +470,18 @@ extension Com_Example_Grpc_ContactServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeGetContactsListInterceptors() ?? []
     )
   }
+
+  internal func getGroceryListForContact(
+    _ request: Com_Example_Grpc_ContactId,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncResponseStream<Com_Example_Grpc_GroceryItem> {
+    return self.performAsyncServerStreamingCall(
+      path: Com_Example_Grpc_ContactServiceClientMetadata.Methods.getGroceryListForContact.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetGroceryListForContactInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -464,6 +520,9 @@ internal protocol Com_Example_Grpc_ContactServiceClientInterceptorFactoryProtoco
 
   /// - Returns: Interceptors to use when invoking 'getContactsList'.
   func makeGetContactsListInterceptors() -> [ClientInterceptor<Com_Example_Grpc_Empty, Com_Example_Grpc_ContactsList>]
+
+  /// - Returns: Interceptors to use when invoking 'getGroceryListForContact'.
+  func makeGetGroceryListForContactInterceptors() -> [ClientInterceptor<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>]
 }
 
 internal enum Com_Example_Grpc_ContactServiceClientMetadata {
@@ -477,6 +536,7 @@ internal enum Com_Example_Grpc_ContactServiceClientMetadata {
       Com_Example_Grpc_ContactServiceClientMetadata.Methods.clearContacts,
       Com_Example_Grpc_ContactServiceClientMetadata.Methods.getContact,
       Com_Example_Grpc_ContactServiceClientMetadata.Methods.getContactsList,
+      Com_Example_Grpc_ContactServiceClientMetadata.Methods.getGroceryListForContact,
     ]
   )
 
@@ -516,6 +576,12 @@ internal enum Com_Example_Grpc_ContactServiceClientMetadata {
       path: "/com.example.grpc.ContactService/GetContactsList",
       type: GRPCCallType.unary
     )
+
+    internal static let getGroceryListForContact = GRPCMethodDescriptor(
+      name: "GetGroceryListForContact",
+      path: "/com.example.grpc.ContactService/GetGroceryListForContact",
+      type: GRPCCallType.serverStreaming
+    )
   }
 }
 
@@ -534,6 +600,8 @@ internal protocol Com_Example_Grpc_ContactServiceProvider: CallHandlerProvider {
   func getContact(request: Com_Example_Grpc_ContactId, context: StatusOnlyCallContext) -> EventLoopFuture<Com_Example_Grpc_ContactInfo>
 
   func getContactsList(request: Com_Example_Grpc_Empty, context: StatusOnlyCallContext) -> EventLoopFuture<Com_Example_Grpc_ContactsList>
+
+  func getGroceryListForContact(request: Com_Example_Grpc_ContactId, context: StreamingResponseCallContext<Com_Example_Grpc_GroceryItem>) -> EventLoopFuture<GRPCStatus>
 }
 
 extension Com_Example_Grpc_ContactServiceProvider {
@@ -602,6 +670,15 @@ extension Com_Example_Grpc_ContactServiceProvider {
         userFunction: self.getContactsList(request:context:)
       )
 
+    case "GetGroceryListForContact":
+      return ServerStreamingServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Com_Example_Grpc_ContactId>(),
+        responseSerializer: ProtobufSerializer<Com_Example_Grpc_GroceryItem>(),
+        interceptors: self.interceptors?.makeGetGroceryListForContactInterceptors() ?? [],
+        userFunction: self.getGroceryListForContact(request:context:)
+      )
+
     default:
       return nil
     }
@@ -643,6 +720,12 @@ internal protocol Com_Example_Grpc_ContactServiceAsyncProvider: CallHandlerProvi
     request: Com_Example_Grpc_Empty,
     context: GRPCAsyncServerCallContext
   ) async throws -> Com_Example_Grpc_ContactsList
+
+  func getGroceryListForContact(
+    request: Com_Example_Grpc_ContactId,
+    responseStream: GRPCAsyncResponseStreamWriter<Com_Example_Grpc_GroceryItem>,
+    context: GRPCAsyncServerCallContext
+  ) async throws
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -718,6 +801,15 @@ extension Com_Example_Grpc_ContactServiceAsyncProvider {
         wrapping: { try await self.getContactsList(request: $0, context: $1) }
       )
 
+    case "GetGroceryListForContact":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Com_Example_Grpc_ContactId>(),
+        responseSerializer: ProtobufSerializer<Com_Example_Grpc_GroceryItem>(),
+        interceptors: self.interceptors?.makeGetGroceryListForContactInterceptors() ?? [],
+        wrapping: { try await self.getGroceryListForContact(request: $0, responseStream: $1, context: $2) }
+      )
+
     default:
       return nil
     }
@@ -749,6 +841,10 @@ internal protocol Com_Example_Grpc_ContactServiceServerInterceptorFactoryProtoco
   /// - Returns: Interceptors to use when handling 'getContactsList'.
   ///   Defaults to calling `self.makeInterceptors()`.
   func makeGetContactsListInterceptors() -> [ServerInterceptor<Com_Example_Grpc_Empty, Com_Example_Grpc_ContactsList>]
+
+  /// - Returns: Interceptors to use when handling 'getGroceryListForContact'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeGetGroceryListForContactInterceptors() -> [ServerInterceptor<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>]
 }
 
 internal enum Com_Example_Grpc_ContactServiceServerMetadata {
@@ -762,6 +858,7 @@ internal enum Com_Example_Grpc_ContactServiceServerMetadata {
       Com_Example_Grpc_ContactServiceServerMetadata.Methods.clearContacts,
       Com_Example_Grpc_ContactServiceServerMetadata.Methods.getContact,
       Com_Example_Grpc_ContactServiceServerMetadata.Methods.getContactsList,
+      Com_Example_Grpc_ContactServiceServerMetadata.Methods.getGroceryListForContact,
     ]
   )
 
@@ -800,6 +897,12 @@ internal enum Com_Example_Grpc_ContactServiceServerMetadata {
       name: "GetContactsList",
       path: "/com.example.grpc.ContactService/GetContactsList",
       type: GRPCCallType.unary
+    )
+
+    internal static let getGroceryListForContact = GRPCMethodDescriptor(
+      name: "GetGroceryListForContact",
+      path: "/com.example.grpc.ContactService/GetGroceryListForContact",
+      type: GRPCCallType.serverStreaming
     )
   }
 }

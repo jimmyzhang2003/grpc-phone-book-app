@@ -99,6 +99,22 @@ struct EditContactView: View {
             }
             .padding()
         }
+        .navigationTitle("Contact Info")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    GroceryListView(id: id, firstName: firstName)
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.green)
+                        Image(systemName: "phone")
+                            .foregroundColor(.black)
+                    }
+                    .frame(width: 50)
+                }
+            }
+        }
     }
     
     @ViewBuilder private func buildContactInfoRow(title: String, field: ContactField, detail: Binding<String>) -> some View {
@@ -128,7 +144,9 @@ struct EditContactView: View {
 
 struct EditContactView_Previews: PreviewProvider {
     static var previews: some View {
-        EditContactView(id: "123", firstName: "ABC", lastName: "DEF", phoneNumber: "8888888888", email: "123@abc.com")
-            .environmentObject(GRPCManager())
+        NavigationView {
+            EditContactView(id: "123", firstName: "ABC", lastName: "DEF", phoneNumber: "8888888888", email: "123@abc.com")
+                .environmentObject(GRPCManager.shared)
+        }
     }
 }

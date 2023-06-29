@@ -92,12 +92,27 @@ struct Com_Example_Grpc_ContactsList {
   init() {}
 }
 
+struct Com_Example_Grpc_GroceryItem {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var name: String = String()
+
+  var amount: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Com_Example_Grpc_Empty: @unchecked Sendable {}
 extension Com_Example_Grpc_ContactInfo: @unchecked Sendable {}
 extension Com_Example_Grpc_ContactInfoWithId: @unchecked Sendable {}
 extension Com_Example_Grpc_ContactId: @unchecked Sendable {}
 extension Com_Example_Grpc_ContactsList: @unchecked Sendable {}
+extension Com_Example_Grpc_GroceryItem: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -288,6 +303,44 @@ extension Com_Example_Grpc_ContactsList: SwiftProtobuf.Message, SwiftProtobuf._M
 
   static func ==(lhs: Com_Example_Grpc_ContactsList, rhs: Com_Example_Grpc_ContactsList) -> Bool {
     if lhs.contacts != rhs.contacts {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Com_Example_Grpc_GroceryItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GroceryItem"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "amount"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.amount) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    if self.amount != 0 {
+      try visitor.visitSingularInt32Field(value: self.amount, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Com_Example_Grpc_GroceryItem, rhs: Com_Example_Grpc_GroceryItem) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.amount != rhs.amount {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct PhoneBookApp: App {
-    @StateObject private var grpcManager = GRPCManager()
+    @StateObject private var grpcManager = GRPCManager.shared
 
     var body: some Scene {
         WindowGroup {

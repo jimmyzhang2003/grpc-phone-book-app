@@ -45,7 +45,7 @@ struct AddContactView: View {
                 ZStack {
                     Capsule()
                         .fill(.blue)
-                    Text("Create New Contact")
+                    Text("Save")
                         .font(.title2)
                         .foregroundColor(.white)
                 }
@@ -58,12 +58,15 @@ struct AddContactView: View {
         .padding(.horizontal)
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .autocorrectionDisabled()
+        .navigationTitle("Create New Contact")
     }
 }
 
 struct AddContactView_Previews: PreviewProvider {
     static var previews: some View {
-        AddContactView()
-            .environmentObject(GRPCManager())
+        NavigationView {
+            AddContactView()
+                .environmentObject(GRPCManager.shared)
+        }
     }
 }

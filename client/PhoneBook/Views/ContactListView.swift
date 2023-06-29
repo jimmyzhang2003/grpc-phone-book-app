@@ -91,6 +91,6 @@ struct ContactListView: View {
 struct ContactListView_Previews: PreviewProvider {
     static var previews: some View {
         ContactListView()
-            .environmentObject(GRPCManager())
+            .environmentObject(GRPCManager.shared)
     }
 }

@@ -13,6 +13,9 @@ service ContactService {
   rpc ClearContacts (Empty) returns (Empty);
   rpc GetContact (ContactId) returns (ContactInfo);
   rpc GetContactsList (Empty) returns (ContactsList);
+  //rpc AddGroceryItems (stream GroceryItem) returns (Empty); // randomly distribute grocery items across existing contacts
+  rpc GetGroceryListForContact (ContactId) returns (stream GroceryItem);
+ // rpc GetGroceryListForAllContacts 
 }
 
 message Empty {}
@@ -38,4 +41,9 @@ message ContactId {
 
 message ContactsList {
   repeated ContactInfoWithId contacts = 1;
+}
+
+message GroceryItem {
+  string name = 1;
+  int32 amount = 2;
 }
