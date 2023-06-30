@@ -217,10 +217,11 @@ public class ContactServiceImpl extends ContactServiceGrpc.ContactServiceImplBas
             }
 
             for(GroceryItem item : groceryList) {
+                // sleep for a random amount of time between 1 and 5 seconds
+                Thread.sleep(1000 * ((int) (Math.random() * 4) + 1));
+
                 responseObserver.onNext(item);
 
-                // sleep for a short, random amount of time
-                Thread.sleep((int) Math.random() * 5000);
             }
 
             responseObserver.onCompleted();

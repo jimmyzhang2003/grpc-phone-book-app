@@ -7,12 +7,14 @@
 
 import Foundation
 
-public class Contact: Identifiable, Equatable {
+public class Contact: Identifiable, Equatable, ObservableObject {
     public let id: String
     public let firstName: String
     public let lastName: String
     public let phoneNumber: String
     public let email: String
+    
+    @Published var groceryList: [GroceryItem]
     
     public init(id: String, firstName: String, lastName: String, phoneNumber: String, email: String) {
         self.id = id
@@ -20,6 +22,7 @@ public class Contact: Identifiable, Equatable {
         self.lastName = lastName
         self.phoneNumber = phoneNumber
         self.email = email
+        self.groceryList = []
     }
     
     public static func == (lhs: Contact, rhs: Contact) -> Bool {

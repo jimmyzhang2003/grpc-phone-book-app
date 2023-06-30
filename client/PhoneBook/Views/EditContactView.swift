@@ -15,6 +15,7 @@ enum ContactField {
 }
 
 struct EditContactView: View {
+    @State var contact: Contact
     @State var id: String
     @State var firstName: String
     @State var lastName: String
@@ -103,7 +104,7 @@ struct EditContactView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink {
-                    GroceryListView(id: id, firstName: firstName)
+                    GroceryListView(contact: self.contact)
                 } label: {
                     ZStack {
                         Circle()
@@ -144,8 +145,10 @@ struct EditContactView: View {
 
 struct EditContactView_Previews: PreviewProvider {
     static var previews: some View {
+        let contact: Contact = Contact(id: "123", firstName: "ABC", lastName: "DEF", phoneNumber: "8888888888", email: "123@abc.com")
+        
         NavigationView {
-            EditContactView(id: "123", firstName: "ABC", lastName: "DEF", phoneNumber: "8888888888", email: "123@abc.com")
+            EditContactView(contact: contact, id: "123", firstName: "ABC", lastName: "DEF", phoneNumber: "8888888888", email: "123@abc.com")
                 .environmentObject(GRPCManager.shared)
         }
     }

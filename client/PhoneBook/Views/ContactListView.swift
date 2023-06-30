@@ -17,6 +17,7 @@ struct ContactListView: View {
                 ForEach(viewModel.contactsList) { contact in
                     NavigationLink {
                         EditContactView(
+                            contact: contact,
                             id: contact.id,
                             firstName: contact.firstName,
                             lastName: contact.lastName,

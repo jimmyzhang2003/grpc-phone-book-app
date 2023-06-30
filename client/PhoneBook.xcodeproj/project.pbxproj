@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		813E96842A4E644B0058AA77 /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813E96832A4E644B0058AA77 /* GroceryItem.swift */; };
 		816477512A4B37E2007F3974 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477502A4B37E2007F3974 /* Contact.swift */; };
 		816477562A4B4092007F3974 /* server.proto in Sources */ = {isa = PBXBuildFile; fileRef = 816477552A4B4092007F3974 /* server.proto */; };
 		816477592A4B4154007F3974 /* server.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477572A4B4154007F3974 /* server.pb.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		813E96832A4E644B0058AA77 /* GroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
 		816477502A4B37E2007F3974 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		816477552A4B4092007F3974 /* server.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = server.proto; sourceTree = "<group>"; };
 		816477572A4B4154007F3974 /* server.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = server.pb.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				816477502A4B37E2007F3974 /* Contact.swift */,
+				813E96832A4E644B0058AA77 /* GroceryItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				81BB69EE2A49DE6200054DCF /* PhoneBookApp.swift in Sources */,
 				816477562A4B4092007F3974 /* server.proto in Sources */,
 				8164776D2A4B4FA7007F3974 /* GRPCManager.swift in Sources */,
+				813E96842A4E644B0058AA77 /* GroceryItem.swift in Sources */,
 				816477712A4B73F9007F3974 /* ContactListViewModel.swift in Sources */,
 				816477752A4C786D007F3974 /* String+IsValidPhoneNumber.swift in Sources */,
 				816477772A4C7877007F3974 /* String+IsValidEmail.swift in Sources */,

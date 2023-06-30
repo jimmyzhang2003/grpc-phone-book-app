@@ -129,20 +129,21 @@ class GRPCManager: ObservableObject {
         }
     }
     
-//    func getGroceryListForContact(with id: String) {
-//        guard let client = client else { return }
-//
-//        let contactId = Com_Example_Grpc_ContactId.with {
-//            $0.id = id
-//        }
-//
-//        let asyncClient = Com_Example_Grpc_ContactServiceAsyncClient(channel: connection!)
-//
-//        asyncClient.getGroceryListForContact(<#T##request: Com_Example_Grpc_ContactId##Com_Example_Grpc_ContactId#>)
-//
-//
-//        client.getGroceryListForContact(contactId) { response in
-//            response.
-//        }
-//    }
+    func getGroceryListForContact(with id: String, completion: @escaping(GroceryItem) -> Void) {
+        guard let client = client else { return }
+
+        let contactId = Com_Example_Grpc_ContactId.with {
+            $0.id = id
+        }
+
+        Task {
+            do {
+                for try await item in client.getGroceryListForContact(contactId) {
+                    completion(GroceryItem(name: item.name, amount: item.amount))
+                }
+            } catch {
+                print("getGroceryListForContact failed with error: \(error)")
+            }
+        }
+    }
 }
