@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-enum ContactField {
-    case firstName
-    case lastName
-    case phoneNumber
-    case email
-}
-
 struct EditContactView: View {
     @State var contact: Contact
     @State var id: String
@@ -78,8 +71,6 @@ struct EditContactView: View {
                     buildContactInfoRow(title: "Phone:", field: .phoneNumber, detail: self.$phoneNumber)
                     buildContactInfoRow(title: "Email:", field: .email, detail: self.$email)
                 }
-                
-               
             }
             .padding()
 

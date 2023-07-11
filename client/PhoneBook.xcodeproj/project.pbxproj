@@ -24,6 +24,7 @@
 		816477752A4C786D007F3974 /* String+IsValidPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477742A4C786D007F3974 /* String+IsValidPhoneNumber.swift */; };
 		816477772A4C7877007F3974 /* String+IsValidEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477762A4C7877007F3974 /* String+IsValidEmail.swift */; };
 		819344FF2A5DC22D00402641 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819344FE2A5DC22D00402641 /* ChatView.swift */; };
+		819345032A5DE76100402641 /* ContactField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819345022A5DE76100402641 /* ContactField.swift */; };
 		81BB69EE2A49DE6200054DCF /* PhoneBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */; };
 		81BB69F22A49DE6400054DCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BB69F12A49DE6400054DCF /* Assets.xcassets */; };
 		81BB69F52A49DE6400054DCF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BB69F42A49DE6400054DCF /* Preview Assets.xcassets */; };
@@ -44,6 +45,7 @@
 		816477742A4C786D007F3974 /* String+IsValidPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+IsValidPhoneNumber.swift"; sourceTree = "<group>"; };
 		816477762A4C7877007F3974 /* String+IsValidEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+IsValidEmail.swift"; sourceTree = "<group>"; };
 		819344FE2A5DC22D00402641 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		819345022A5DE76100402641 /* ContactField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactField.swift; sourceTree = "<group>"; };
 		81BB69EA2A49DE6200054DCF /* PhoneBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneBookApp.swift; sourceTree = "<group>"; };
 		81BB69F12A49DE6400054DCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			children = (
 				816477502A4B37E2007F3974 /* Contact.swift */,
 				813E96832A4E644B0058AA77 /* GroceryItem.swift */,
+				819345022A5DE76100402641 /* ContactField.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				816477772A4C7877007F3974 /* String+IsValidEmail.swift in Sources */,
 				8164776F2A4B56E2007F3974 /* EditContactView.swift in Sources */,
 				81ED28DB2A4E3D5A00DF316C /* GroceryListView.swift in Sources */,
+				819345032A5DE76100402641 /* ContactField.swift in Sources */,
 				816477592A4B4154007F3974 /* server.pb.swift in Sources */,
 				816477512A4B37E2007F3974 /* Contact.swift in Sources */,
 			);

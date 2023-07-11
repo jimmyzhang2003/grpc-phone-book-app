@@ -16,6 +16,8 @@ class GRPCManager: ObservableObject {
     private var client: Com_Example_Grpc_ContactServiceAsyncClient?
     static let shared: GRPCManager = GRPCManager() // singleton
     
+    private var groceryListCall: GRPCAsyncServerStreamingCall<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>? = nil
+    
     private init() {
         let conf = ClientConnection.Configuration.default(
             target: .hostAndPort("localhost", 50051),
@@ -42,14 +44,14 @@ class GRPCManager: ObservableObject {
         }
     }
     
-    func addContact(_ contact: Contact) -> Task<String, Never> {
+    func addContact(firstName: String, lastName: String, phoneNumber: String, email: String) -> Task<String, Never> {
         guard let client = client else { return Task { "" } }
         
         let contactInfo = Com_Example_Grpc_ContactInfo.with {
-            $0.firstName = contact.firstName
-            $0.lastName = contact.lastName
-            $0.phoneNumber = contact.phoneNumber
-            $0.email = contact.email
+            $0.firstName = firstName
+            $0.lastName = lastName
+            $0.phoneNumber = phoneNumber
+            $0.email = email
         }
         
         return Task {
@@ -135,15 +137,29 @@ class GRPCManager: ObservableObject {
         let contactId = Com_Example_Grpc_ContactId.with {
             $0.id = id
         }
+        
+        let call = client.makeGetGroceryListForContactCall(contactId)
+        self.groceryListCall = call // so that client can cancel call when exiting screen
 
         Task {
             do {
-                for try await item in client.getGroceryListForContact(contactId) {
+                print("Getting grocery list for contact with id \(id)")
+                for try await item in call.responseStream {
                     completion(GroceryItem(name: item.name, amount: item.amount))
                 }
             } catch {
                 print("getGroceryListForContact failed with error: \(error)")
             }
         }
+    }
+    
+    func cancelGetGroceryListForContact() {
+        guard let call = groceryListCall else {
+            print("No existing streaming call for grocery list")
+            return
+        }
+        
+        call.cancel()
+        self.groceryListCall = nil
     }
 }

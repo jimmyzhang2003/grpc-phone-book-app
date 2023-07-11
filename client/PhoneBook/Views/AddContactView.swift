@@ -49,15 +49,12 @@ struct AddContactView: View {
     
     @ViewBuilder private func buildSaveButton() -> some View {
         Button(action: {
-            let newContact = Contact(
-                id: self.id,
+            _ = grpcManager.addContact(
                 firstName: self.firstName,
                 lastName: self.lastName,
                 phoneNumber: self.phoneNumber,
                 email: self.email
             )
-            
-            _ = grpcManager.addContact(newContact)
             
             self.presentationMode.wrappedValue.dismiss()
         }, label: {
@@ -73,7 +70,6 @@ struct AddContactView: View {
         .disabled(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail)
         .opacity(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail ? 0.5 : 1.0)
     }
-    
 }
 
 struct AddContactView_Previews: PreviewProvider {

@@ -24,8 +24,6 @@ struct GroceryListView: View {
         .navigationTitle("\(contact.firstName)'s Grocery List")
         .onAppear {
             grpcManager.getGroceryListForContact(with: contact.id) { item in
-                // TODO: is this the right way to make UI updates publish on the main thread???
-                // TODO: stop execution once we leave the view
                 DispatchQueue.main.async {
                     contact.groceryList.append(item)
                 }
@@ -33,6 +31,7 @@ struct GroceryListView: View {
         }
         .onDisappear {
             contact.groceryList.removeAll()
+            grpcManager.cancelGetGroceryListForContact()
         }
     }
 }
