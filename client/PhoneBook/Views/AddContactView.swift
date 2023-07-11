@@ -19,47 +19,61 @@ struct AddContactView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        VStack {
-            TextField("First name (e.g., Jimmy)", text: self.$firstName)
-                .border(self.firstName.isEmpty ? .red : .green)
-            TextField("Last name (e.g., Zhang)", text: self.$lastName)
-                .border(self.lastName.isEmpty ? .red : .green)
-            TextField("Phone number (e.g., 8888888888)", text: self.$phoneNumber)
-                .border(!self.phoneNumber.isValidPhoneNumber ? .red : .green)
-            TextField("Email (e.g., jimmy.zhang@nuance.com)", text: self.$email)
-                .border(!self.email.isValidEmail ? .red : .green)
+        Form {
+            Section(header: Text("First Name")) {
+                TextField("First name (e.g., Jimmy)", text: self.$firstName)
+                    .border(self.firstName.isEmpty ? .red : .green)
+            }
             
-            Button(action: {
-                let newContact = Contact(
-                    id: self.id,
-                    firstName: self.firstName,
-                    lastName: self.lastName,
-                    phoneNumber: self.phoneNumber,
-                    email: self.email
-                )
-                
-                _ = grpcManager.addContact(newContact)
-                
-                self.presentationMode.wrappedValue.dismiss()
-            }, label: {
-                ZStack {
-                    Capsule()
-                        .fill(.blue)
-                    Text("Save")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                }
-                .frame(height: 50)
-                .padding(.top)
-            })
-            .disabled(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail)
-            .opacity(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail ? 0.5 : 1.0)
+            Section(header: Text("Last Name")) {
+                TextField("Last name (e.g., Zhang)", text: self.$lastName)
+                    .border(self.lastName.isEmpty ? .red : .green)
+            }
+            
+            Section(header: Text("Phone Number")) {
+                TextField("Phone number (e.g., 8888888888)", text: self.$phoneNumber)
+                    .border(!self.phoneNumber.isValidPhoneNumber ? .red : .green)
+            }
+            
+            Section(header: Text("Email")) {
+                TextField("Email (e.g., jimmy.zhang@nuance.com)", text: self.$email)
+                    .border(!self.email.isValidEmail ? .red : .green)
+            }
+            
+            Section(footer: buildSaveButton()) {}
         }
-        .padding(.horizontal)
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .autocorrectionDisabled()
         .navigationTitle("Create New Contact")
     }
+    
+    @ViewBuilder private func buildSaveButton() -> some View {
+        Button(action: {
+            let newContact = Contact(
+                id: self.id,
+                firstName: self.firstName,
+                lastName: self.lastName,
+                phoneNumber: self.phoneNumber,
+                email: self.email
+            )
+            
+            _ = grpcManager.addContact(newContact)
+            
+            self.presentationMode.wrappedValue.dismiss()
+        }, label: {
+            ZStack {
+                Capsule()
+                    .fill(.blue)
+                Text("Save")
+                    .font(.title2)
+                    .foregroundColor(.white)
+            }
+            .frame(height: 50)
+        })
+        .disabled(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail)
+        .opacity(firstName.isEmpty || lastName.isEmpty || !self.phoneNumber.isValidPhoneNumber || !self.email.isValidEmail ? 0.5 : 1.0)
+    }
+    
 }
 
 struct AddContactView_Previews: PreviewProvider {

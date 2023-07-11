@@ -30,6 +30,47 @@ struct EditContactView: View {
     
     var body: some View {
         VStack {
+            VStack(spacing: 15) {
+                Image("ProfileIcon")
+                    .resizable()
+                    .frame(width: 150, height: 150)
+                
+                Text("\(firstName) \(lastName)")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                    .padding(.horizontal, 3)
+                    .truncationMode(.middle)
+            }
+            .padding(.vertical)
+            
+            HStack(spacing: 50) {
+                NavigationLink {
+                    GroceryListView(contact: self.contact)
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.green)
+                        Image(systemName: "phone.fill")
+                            .foregroundColor(.black)
+                    }
+                    .frame(width: 50)
+                }
+                
+                NavigationLink {
+                    ChatView()
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.green)
+                        Image(systemName: "message.fill")
+                            .foregroundColor(.black)
+                    }
+                    .frame(width: 50)
+                }
+            }
+
+
             HStack {
                 VStack {
                     buildContactInfoRow(title: "First Name:", field: .firstName, detail: self.$firstName)
@@ -38,23 +79,10 @@ struct EditContactView: View {
                     buildContactInfoRow(title: "Email:", field: .email, detail: self.$email)
                 }
                 
-                Button(
-                    action: {
-                        isEditing = !isEditing
-                    }, label: {
-                        ZStack {
-                            Circle()
-                                .frame(width: 40)
-                                .foregroundColor(isEditing ? .pink : .gray)
-                            
-                            Image(systemName: "pencil")
-                        }
-                    }
-                )
+               
             }
             .padding()
-            .border(.cyan)
-            
+
             HStack(spacing: 50) {
                 Button(
                     action : {
@@ -103,17 +131,19 @@ struct EditContactView: View {
         .navigationTitle("Contact Info")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink {
-                    GroceryListView(contact: self.contact)
-                } label: {
-                    ZStack {
-                        Circle()
-                            .fill(.green)
-                        Image(systemName: "phone")
-                            .foregroundColor(.black)
+                Button(
+                    action: {
+                        isEditing = !isEditing
+                    }, label: {
+                        ZStack {
+                            Circle()
+                                .frame(width: 40)
+                                .foregroundColor(isEditing ? .pink : .gray)
+                            
+                            Image(systemName: "pencil")
+                        }
                     }
-                    .frame(width: 50)
-                }
+                )
             }
         }
     }
@@ -125,6 +155,7 @@ struct EditContactView: View {
             TextField(detail.wrappedValue, text: detail)
                 .disabled(!isEditing)
                 .autocorrectionDisabled()
+                .padding(.horizontal, 3)
                 .border(isEditing ? getBorderColor(field, content: detail.wrappedValue) : .clear)
                 .animation(.default, value: isEditing)
         }

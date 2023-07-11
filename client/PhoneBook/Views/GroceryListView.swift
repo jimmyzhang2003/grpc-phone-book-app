@@ -14,9 +14,10 @@ struct GroceryListView: View {
     var body: some View {
         List {
             ForEach(contact.groceryList, id: \.id) { item in
-                    VStack {
+                VStack(alignment: .leading) {
                     Text(item.name)
-                    Text("\(item.amount)")
+                        .fontWeight(.bold)
+                    Text("Amount: \(item.amount)")
                 }
             }
         }
