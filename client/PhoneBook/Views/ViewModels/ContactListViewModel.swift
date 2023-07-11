@@ -10,10 +10,15 @@ import Foundation
 extension ContactListView {
     @MainActor class ContactListViewModel: ObservableObject {
         @Published var contactsList: [Contact] = []
+        @Published var showConfirmationDialog: Bool = false
         
         func updateContactsList(_ newContactsList: [Contact]) {
             self.contactsList = newContactsList
             self.contactsList.sort { $0.firstName < $1.firstName }
+        }
+        
+        func clearContactsList() {
+            self.contactsList.removeAll()
         }
     }
 }

@@ -33,9 +33,10 @@ struct ContactListView: View {
                         Button(
                             role: .destructive,
                             action: {
-                                grpcManager.deleteContact(with: contact.id) 
-                                grpcManager.getContactsList { contacts in
-                                    DispatchQueue.main.async {
+                                grpcManager.deleteContact(with: contact.id)
+                                
+                                DispatchQueue.main.async {
+                                    grpcManager.getContactsList { contacts in
                                         viewModel.updateContactsList(contacts)
                                     }
                                 }
@@ -54,17 +55,25 @@ struct ContactListView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(
                         action: {
-                            grpcManager.clearContacts()
-                            grpcManager.getContactsList { contacts in
-                                DispatchQueue.main.async {
-                                    viewModel.updateContactsList(contacts)
-                                }
-                            }
+                            viewModel.showConfirmationDialog = true
                         }, label: {
                             Text("Clear Contacts")
                         }
                     )
                     .disabled(viewModel.contactsList.isEmpty)
+                    .confirmationDialog(
+                        "Are you sure?",
+                        isPresented: $viewModel.showConfirmationDialog,
+                        actions: {
+                            Button("Yes", role: .destructive) {
+                                grpcManager.clearContacts()
+                                viewModel.clearContactsList()
+                            }
+                        },
+                        message: {
+                            Text("This cannot be undone.")
+                        }
+                    )
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
