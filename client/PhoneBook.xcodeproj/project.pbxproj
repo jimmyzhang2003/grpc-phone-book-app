@@ -25,6 +25,7 @@
 		816477772A4C7877007F3974 /* String+IsValidEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816477762A4C7877007F3974 /* String+IsValidEmail.swift */; };
 		819344FF2A5DC22D00402641 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819344FE2A5DC22D00402641 /* ChatView.swift */; };
 		819345032A5DE76100402641 /* ContactField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819345022A5DE76100402641 /* ContactField.swift */; };
+		81AD96712A5F3817009D09E2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AD96702A5F3817009D09E2 /* Message.swift */; };
 		81BB69EE2A49DE6200054DCF /* PhoneBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */; };
 		81BB69F22A49DE6400054DCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BB69F12A49DE6400054DCF /* Assets.xcassets */; };
 		81BB69F52A49DE6400054DCF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BB69F42A49DE6400054DCF /* Preview Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		816477762A4C7877007F3974 /* String+IsValidEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+IsValidEmail.swift"; sourceTree = "<group>"; };
 		819344FE2A5DC22D00402641 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		819345022A5DE76100402641 /* ContactField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactField.swift; sourceTree = "<group>"; };
+		81AD96702A5F3817009D09E2 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		81BB69EA2A49DE6200054DCF /* PhoneBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BB69ED2A49DE6200054DCF /* PhoneBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneBookApp.swift; sourceTree = "<group>"; };
 		81BB69F12A49DE6400054DCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				816477502A4B37E2007F3974 /* Contact.swift */,
 				813E96832A4E644B0058AA77 /* GroceryItem.swift */,
 				819345022A5DE76100402641 /* ContactField.swift */,
+				81AD96702A5F3817009D09E2 /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				81BB6A012A49E02800054DCF /* ContactListView.swift in Sources */,
 				8164775A2A4B4154007F3974 /* server.grpc.swift in Sources */,
 				81BB6A042A49E04600054DCF /* AddContactView.swift in Sources */,
+				81AD96712A5F3817009D09E2 /* Message.swift in Sources */,
 				81BB69EE2A49DE6200054DCF /* PhoneBookApp.swift in Sources */,
 				816477562A4B4092007F3974 /* server.proto in Sources */,
 				8164776D2A4B4FA7007F3974 /* GRPCManager.swift in Sources */,

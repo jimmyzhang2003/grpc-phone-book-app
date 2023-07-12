@@ -10,6 +10,7 @@ import GRPC
 import SwiftProtobuf
 import NIO
 import NIOSSL
+import Combine
 
 class GRPCManager: ObservableObject {
     var connection: ClientConnection?
@@ -17,6 +18,10 @@ class GRPCManager: ObservableObject {
     static let shared: GRPCManager = GRPCManager() // singleton
     
     private var groceryListCall: GRPCAsyncServerStreamingCall<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>? = nil
+    private var chatCall: GRPCAsyncBidirectionalStreamingCall<Com_Example_Grpc_ChatMessageWithId, Com_Example_Grpc_ChatMessage>? = nil
+    
+    @Published var chatMessagePublisher = CurrentValueSubject<String, Never>("")
+    private var disposeBag: Set<AnyCancellable> = []
     
     private init() {
         let conf = ClientConnection.Configuration.default(
@@ -161,5 +166,59 @@ class GRPCManager: ObservableObject {
         
         call.cancel()
         self.groceryListCall = nil
+    }
+    
+    func chatWithContact(with id: String, completion: @escaping(String) -> Void) async {
+        guard let client = client else { return }
+        
+        do {
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                let call = client.makeChatCall()
+                self.chatCall = call
+                
+                // request stream
+                group.addTask { [weak self] in
+                    guard let self = self else { return }
+                    // keep listening to messages sent by user
+                    while true {
+                        self.chatMessagePublisher
+                            .receive(on: DispatchQueue.main)
+                            .sink { message in
+                                Task {
+                                    let outgoingMessage = Com_Example_Grpc_ChatMessageWithId.with {
+                                        $0.id = id
+                                        $0.content = message
+                                    }
+                                    
+                                    try await call.requestStream.send(outgoingMessage)
+                                }
+                            }
+                            .store(in: &self.disposeBag)
+                    }
+                    // call.requestStream.finish()
+                }
+                
+                // response stream
+                group.addTask {
+                    for try await incomingMessage in call.responseStream {
+                        completion(incomingMessage.content)
+                    }
+                }
+                
+                try await group.waitForAll()
+            }
+        } catch {
+            print("chatWithContact failed with error: \(error)")
+        }
+    }
+    
+    func cancelChatWithContact() {
+        guard let call = chatCall else {
+            print("No existing bi-directional streaming call for chatting")
+            return
+        }
+        
+        call.cancel()
+        self.chatCall = nil
     }
 }

@@ -67,6 +67,11 @@ internal protocol Com_Example_Grpc_ContactServiceClientProtocol: GRPCClient {
     callOptions: CallOptions?,
     handler: @escaping (Com_Example_Grpc_GroceryItem) -> Void
   ) -> ServerStreamingCall<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>
+
+  func chat(
+    callOptions: CallOptions?,
+    handler: @escaping (Com_Example_Grpc_ChatMessage) -> Void
+  ) -> BidirectionalStreamingCall<Com_Example_Grpc_ChatMessageWithId, Com_Example_Grpc_ChatMessage>
 }
 
 extension Com_Example_Grpc_ContactServiceClientProtocol {
@@ -202,6 +207,27 @@ extension Com_Example_Grpc_ContactServiceClientProtocol {
       handler: handler
     )
   }
+
+  /// Bidirectional streaming call to Chat
+  ///
+  /// Callers should use the `send` method on the returned object to send messages
+  /// to the server. The caller should send an `.end` after the final message has been sent.
+  ///
+  /// - Parameters:
+  ///   - callOptions: Call options.
+  ///   - handler: A closure called when each response is received from the server.
+  /// - Returns: A `ClientStreamingCall` with futures for the metadata and status.
+  internal func chat(
+    callOptions: CallOptions? = nil,
+    handler: @escaping (Com_Example_Grpc_ChatMessage) -> Void
+  ) -> BidirectionalStreamingCall<Com_Example_Grpc_ChatMessageWithId, Com_Example_Grpc_ChatMessage> {
+    return self.makeBidirectionalStreamingCall(
+      path: Com_Example_Grpc_ContactServiceClientMetadata.Methods.chat.path,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeChatInterceptors() ?? [],
+      handler: handler
+    )
+  }
 }
 
 @available(*, deprecated)
@@ -300,6 +326,10 @@ internal protocol Com_Example_Grpc_ContactServiceAsyncClientProtocol: GRPCClient
     _ request: Com_Example_Grpc_ContactId,
     callOptions: CallOptions?
   ) -> GRPCAsyncServerStreamingCall<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>
+
+  func makeChatCall(
+    callOptions: CallOptions?
+  ) -> GRPCAsyncBidirectionalStreamingCall<Com_Example_Grpc_ChatMessageWithId, Com_Example_Grpc_ChatMessage>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -395,6 +425,16 @@ extension Com_Example_Grpc_ContactServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeGetGroceryListForContactInterceptors() ?? []
     )
   }
+
+  internal func makeChatCall(
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncBidirectionalStreamingCall<Com_Example_Grpc_ChatMessageWithId, Com_Example_Grpc_ChatMessage> {
+    return self.makeAsyncBidirectionalStreamingCall(
+      path: Com_Example_Grpc_ContactServiceClientMetadata.Methods.chat.path,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeChatInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -482,6 +522,30 @@ extension Com_Example_Grpc_ContactServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeGetGroceryListForContactInterceptors() ?? []
     )
   }
+
+  internal func chat<RequestStream>(
+    _ requests: RequestStream,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncResponseStream<Com_Example_Grpc_ChatMessage> where RequestStream: Sequence, RequestStream.Element == Com_Example_Grpc_ChatMessageWithId {
+    return self.performAsyncBidirectionalStreamingCall(
+      path: Com_Example_Grpc_ContactServiceClientMetadata.Methods.chat.path,
+      requests: requests,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeChatInterceptors() ?? []
+    )
+  }
+
+  internal func chat<RequestStream>(
+    _ requests: RequestStream,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncResponseStream<Com_Example_Grpc_ChatMessage> where RequestStream: AsyncSequence & Sendable, RequestStream.Element == Com_Example_Grpc_ChatMessageWithId {
+    return self.performAsyncBidirectionalStreamingCall(
+      path: Com_Example_Grpc_ContactServiceClientMetadata.Methods.chat.path,
+      requests: requests,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeChatInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -523,6 +587,9 @@ internal protocol Com_Example_Grpc_ContactServiceClientInterceptorFactoryProtoco
 
   /// - Returns: Interceptors to use when invoking 'getGroceryListForContact'.
   func makeGetGroceryListForContactInterceptors() -> [ClientInterceptor<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>]
+
+  /// - Returns: Interceptors to use when invoking 'chat'.
+  func makeChatInterceptors() -> [ClientInterceptor<Com_Example_Grpc_ChatMessageWithId, Com_Example_Grpc_ChatMessage>]
 }
 
 internal enum Com_Example_Grpc_ContactServiceClientMetadata {
@@ -537,6 +604,7 @@ internal enum Com_Example_Grpc_ContactServiceClientMetadata {
       Com_Example_Grpc_ContactServiceClientMetadata.Methods.getContact,
       Com_Example_Grpc_ContactServiceClientMetadata.Methods.getContactsList,
       Com_Example_Grpc_ContactServiceClientMetadata.Methods.getGroceryListForContact,
+      Com_Example_Grpc_ContactServiceClientMetadata.Methods.chat,
     ]
   )
 
@@ -582,6 +650,12 @@ internal enum Com_Example_Grpc_ContactServiceClientMetadata {
       path: "/com.example.grpc.ContactService/GetGroceryListForContact",
       type: GRPCCallType.serverStreaming
     )
+
+    internal static let chat = GRPCMethodDescriptor(
+      name: "Chat",
+      path: "/com.example.grpc.ContactService/Chat",
+      type: GRPCCallType.bidirectionalStreaming
+    )
   }
 }
 
@@ -602,6 +676,8 @@ internal protocol Com_Example_Grpc_ContactServiceProvider: CallHandlerProvider {
   func getContactsList(request: Com_Example_Grpc_Empty, context: StatusOnlyCallContext) -> EventLoopFuture<Com_Example_Grpc_ContactsList>
 
   func getGroceryListForContact(request: Com_Example_Grpc_ContactId, context: StreamingResponseCallContext<Com_Example_Grpc_GroceryItem>) -> EventLoopFuture<GRPCStatus>
+
+  func chat(context: StreamingResponseCallContext<Com_Example_Grpc_ChatMessage>) -> EventLoopFuture<(StreamEvent<Com_Example_Grpc_ChatMessageWithId>) -> Void>
 }
 
 extension Com_Example_Grpc_ContactServiceProvider {
@@ -679,6 +755,15 @@ extension Com_Example_Grpc_ContactServiceProvider {
         userFunction: self.getGroceryListForContact(request:context:)
       )
 
+    case "Chat":
+      return BidirectionalStreamingServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Com_Example_Grpc_ChatMessageWithId>(),
+        responseSerializer: ProtobufSerializer<Com_Example_Grpc_ChatMessage>(),
+        interceptors: self.interceptors?.makeChatInterceptors() ?? [],
+        observerFactory: self.chat(context:)
+      )
+
     default:
       return nil
     }
@@ -724,6 +809,12 @@ internal protocol Com_Example_Grpc_ContactServiceAsyncProvider: CallHandlerProvi
   func getGroceryListForContact(
     request: Com_Example_Grpc_ContactId,
     responseStream: GRPCAsyncResponseStreamWriter<Com_Example_Grpc_GroceryItem>,
+    context: GRPCAsyncServerCallContext
+  ) async throws
+
+  func chat(
+    requestStream: GRPCAsyncRequestStream<Com_Example_Grpc_ChatMessageWithId>,
+    responseStream: GRPCAsyncResponseStreamWriter<Com_Example_Grpc_ChatMessage>,
     context: GRPCAsyncServerCallContext
   ) async throws
 }
@@ -810,6 +901,15 @@ extension Com_Example_Grpc_ContactServiceAsyncProvider {
         wrapping: { try await self.getGroceryListForContact(request: $0, responseStream: $1, context: $2) }
       )
 
+    case "Chat":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Com_Example_Grpc_ChatMessageWithId>(),
+        responseSerializer: ProtobufSerializer<Com_Example_Grpc_ChatMessage>(),
+        interceptors: self.interceptors?.makeChatInterceptors() ?? [],
+        wrapping: { try await self.chat(requestStream: $0, responseStream: $1, context: $2) }
+      )
+
     default:
       return nil
     }
@@ -845,6 +945,10 @@ internal protocol Com_Example_Grpc_ContactServiceServerInterceptorFactoryProtoco
   /// - Returns: Interceptors to use when handling 'getGroceryListForContact'.
   ///   Defaults to calling `self.makeInterceptors()`.
   func makeGetGroceryListForContactInterceptors() -> [ServerInterceptor<Com_Example_Grpc_ContactId, Com_Example_Grpc_GroceryItem>]
+
+  /// - Returns: Interceptors to use when handling 'chat'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeChatInterceptors() -> [ServerInterceptor<Com_Example_Grpc_ChatMessageWithId, Com_Example_Grpc_ChatMessage>]
 }
 
 internal enum Com_Example_Grpc_ContactServiceServerMetadata {
@@ -859,6 +963,7 @@ internal enum Com_Example_Grpc_ContactServiceServerMetadata {
       Com_Example_Grpc_ContactServiceServerMetadata.Methods.getContact,
       Com_Example_Grpc_ContactServiceServerMetadata.Methods.getContactsList,
       Com_Example_Grpc_ContactServiceServerMetadata.Methods.getGroceryListForContact,
+      Com_Example_Grpc_ContactServiceServerMetadata.Methods.chat,
     ]
   )
 
@@ -903,6 +1008,12 @@ internal enum Com_Example_Grpc_ContactServiceServerMetadata {
       name: "GetGroceryListForContact",
       path: "/com.example.grpc.ContactService/GetGroceryListForContact",
       type: GRPCCallType.serverStreaming
+    )
+
+    internal static let chat = GRPCMethodDescriptor(
+      name: "Chat",
+      path: "/com.example.grpc.ContactService/Chat",
+      type: GRPCCallType.bidirectionalStreaming
     )
   }
 }

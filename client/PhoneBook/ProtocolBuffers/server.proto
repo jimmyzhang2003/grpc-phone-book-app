@@ -14,6 +14,7 @@ service ContactService {
   rpc GetContact (ContactId) returns (ContactInfo);
   rpc GetContactsList (Empty) returns (ContactsList);
   rpc GetGroceryListForContact (ContactId) returns (stream GroceryItem);
+  rpc Chat (stream ChatMessageWithId) returns (stream ChatMessage);
 }
 
 message Empty {}
@@ -44,4 +45,13 @@ message ContactsList {
 message GroceryItem {
   string name = 1;
   int32 amount = 2;
+}
+
+message ChatMessage {
+  string content = 1;
+}
+
+message ChatMessageWithId {
+  string id = 1;
+  string content = 2;
 }
