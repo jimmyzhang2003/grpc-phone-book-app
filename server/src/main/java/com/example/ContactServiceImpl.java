@@ -25,12 +25,13 @@ public class ContactServiceImpl extends ContactServiceGrpc.ContactServiceImplBas
     private final Map<String, ArrayList<ChatMessage>> chatMessageMap = new HashMap<>();
 
     private ArrayList<String> groceryItemNames = new ArrayList<>(Arrays.asList(
-        "Bread", "Butter", "Cheese", "Pasta", "Fish", "Chips", "Milk", "Butter", "Oil", "Ground Beef", "Flour", "Tomatoes", "Broccoli", "Cereal",  "Chicken"
+        "Bread", "Butter", "Cheese", "Pasta", "Fish", "Chips", "Milk", "Oil", "Ground Beef", "Flour", "Tomatoes", "Broccoli", "Cereal",  "Chicken", "Spinach", 
+        "Sushi", "Rice", "Sugar", "Salt"
     ));
 
     private ArrayList<String> chatMessagePhrases = new ArrayList<>(Arrays.asList(
         "Hey!", "How's it going?", "I'm chilling", "Did you get my grocery list yet?", "Bye!", "Let's catch up some time!", "How've you been?", "You busy today?",
-        "Want to grab a drink later?", "See ya!", "Sorry, who is this again?"
+        "Want to grab a drink later?", "See ya!", "Sorry, who is this again?", "It's too late to apologize.", "Wait till you see my grocery list."
     ));
     
     @Override
@@ -56,7 +57,7 @@ public class ContactServiceImpl extends ContactServiceGrpc.ContactServiceImplBas
             groceryList.add(
                 GroceryItem.newBuilder()
                     .setName(groceryItemNames.get((int) (Math.random() * groceryItemNames.size())))
-                    .setAmount((int) Math.random() * 4 + 1) // quantity between 1 and 5
+                    .setAmount((int) (Math.random() * 4 + 1)) // quantity between 1 and 5
                     .build()
             );
 
@@ -222,7 +223,6 @@ public class ContactServiceImpl extends ContactServiceGrpc.ContactServiceImplBas
                 Thread.sleep(1000 * ((int) (Math.random() * 4) + 1));
 
                 responseObserver.onNext(item);
-
             }
 
             responseObserver.onCompleted();
@@ -251,7 +251,6 @@ public class ContactServiceImpl extends ContactServiceGrpc.ContactServiceImplBas
                     // TODO: NEED TO EVENTUALLY SAVE THE CHAT LOG SOMEWHERE
 
                     
-                    
                     if (id == "") {
                         throw new MissingIdException("No ID provided");
                     }
@@ -260,12 +259,9 @@ public class ContactServiceImpl extends ContactServiceGrpc.ContactServiceImplBas
                         throw new InvalidIdException("ID not found");
                     }
 
-                    for(ChatMessage phrase : chatMessageList) {
-                            // sleep for a random amount of time between 1 and 5 seconds
-                            Thread.sleep(1000 * ((int) (Math.random() * 4) + 1));
-
-                            responseObserver.onNext(phrase);
-                    }
+                    // sleep for a random amount of time between 1 and 5 seconds, then send a random phrase from contact's vocabulary
+                    Thread.sleep(1000 * ((int) (Math.random() * 4) + 1));
+                    responseObserver.onNext(chatMessageList.get((int) (Math.random() * chatMessageList.size())));
                 } catch (MissingIdException ex) {
                     Status status = Status.FAILED_PRECONDITION.withDescription("ID must be provided to delete contact");
                     responseObserver.onError(status.asRuntimeException());

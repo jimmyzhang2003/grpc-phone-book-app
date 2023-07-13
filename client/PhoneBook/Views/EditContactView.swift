@@ -51,7 +51,7 @@ struct EditContactView: View {
                 }
                 
                 NavigationLink {
-                    ChatView()
+                    ChatView(contact: self.contact)
                 } label: {
                     ZStack {
                         Circle()

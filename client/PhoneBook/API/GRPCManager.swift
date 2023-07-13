@@ -179,22 +179,22 @@ class GRPCManager: ObservableObject {
                 // request stream
                 group.addTask { [weak self] in
                     guard let self = self else { return }
+                    
                     // keep listening to messages sent by user
-                    while true {
-                        self.chatMessagePublisher
-                            .receive(on: DispatchQueue.main)
-                            .sink { message in
-                                Task {
-                                    let outgoingMessage = Com_Example_Grpc_ChatMessageWithId.with {
-                                        $0.id = id
-                                        $0.content = message
-                                    }
-                                    
-                                    try await call.requestStream.send(outgoingMessage)
+                    self.chatMessagePublisher
+                        .receive(on: DispatchQueue.main)
+                        .sink { message in
+                            Task {
+                                let outgoingMessage = Com_Example_Grpc_ChatMessageWithId.with {
+                                    $0.id = id
+                                    $0.content = message
                                 }
+                                
+                                try await call.requestStream.send(outgoingMessage)
                             }
-                            .store(in: &self.disposeBag)
-                    }
+                        }
+                        .store(in: &self.disposeBag)
+                    
                     // call.requestStream.finish()
                 }
                 
